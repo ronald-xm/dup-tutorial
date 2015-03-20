@@ -2,9 +2,9 @@ This doc describes the API provided by the topology server side.
 
 ## CI operations
 
-### Get CI detail
-
 ----------
+
+### Get CI detail
 
 **GET** ```/ci/:id```
 
@@ -51,6 +51,8 @@ An object of the error, 'error' property represent the error code, example as be
 ```
 
 ----------
+
+### Create virtual CI
 
 **POST** ```/ci/:id```
 
@@ -100,6 +102,8 @@ id: string as the ciNo of the CI
 
 ----------
 
+### Update virtual CI
+
 **PUT** ```/ci/:id```
 
 Update a virtual CI.
@@ -148,6 +152,8 @@ id: string as the ciNo of the CI
 
 ----------
 
+### Delete virtual CI
+
 **DELETE** ```/ci/:id```
 
 Delete a virtual CI.
@@ -174,6 +180,8 @@ id: string as the ciNo of the CI
 ```
 
 ----------
+
+### Search CIs
 
 **POST** ```/ci/search?pageSize=:pageSize&pageNum=:pageNum```
 
@@ -251,6 +259,8 @@ An object of the error, example as below
 
 ----------
 
+### Search virtual CIs
+
 **POST** /ci/search/virtual?pageSize=:pageSize&pageNum=:pageNum
 
 Search for list of virtual CIs with the specified conditions.
@@ -324,11 +334,7 @@ An object of the error, example as below
 }
 ```
 
-----------
+## Relation operations
 
 
-
-## Relation related
-
-
-## Map related
+## Map operations
