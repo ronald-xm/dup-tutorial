@@ -4,7 +4,7 @@ This doc describes the API provided by the topology server.
 
 ### Get CI detail
 
-**GET** ```/ci/:id```
+**GET** ```/tplg/ci/:id```
 
 Get CI detail for the specified ciNo. 
 
@@ -241,7 +241,8 @@ An object, example as below
   ],
   "pageSize": 2,
   "pageNum": 2,
-  "total": 17959
+  "totalCount": 17959,
+  "totalPage": 8000
 }
 ```
 
@@ -319,7 +320,8 @@ An object, example as below
   ],
   "pageSize": 2,
   "pageNum": 2,
-  "total": 17959
+  "totalCount": 17959,
+  "totalPage": 8000
 }
 ```
 
@@ -594,9 +596,10 @@ pageNum: an integer stands for requested page number, default to 1.
       "relDesc": "test link"
     }
   ],
-  "pageSize": 1,
-  "pageNum": 2,
-  "total": 236
+  "pageSize": 2,
+  "pageNum": 1,
+  "totalCount": 236,
+  "totalPage": 118
 }
 ```
 
@@ -670,9 +673,10 @@ pageNum: an integer stands for requested page number, default to 1.
       "relDesc": "test link"
     }
   ],
-  "pageSize": 1,
-  "pageNum": 2,
-  "total": 236
+  "pageSize": 2,
+  "pageNum": 1,
+  "totalCount": 236,
+  "totalPage": 118
 }
 ```
 
