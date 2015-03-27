@@ -1,5 +1,31 @@
 This doc describes the API provided by the topology server.
 
+## Session management
+
+### Login to system
+
+**POST** /tplg/login
+
+*Request body:*
+
+An object as below: 
+
+```json
+{
+	"empdata": "5af40ff0bc93247e71d8f06a58e9065e2a684a565919087c7cbf5528ddb53c9354ec71bb142fcf8c262beb7e1e0212b30c6f6d8631bfd253d53e20ffdac408175fb416d2700e3632fde208e15ff9f976f20afe9fb24bc3b103e62bf168183527e00f0960135f758b174bea2ae5d544162bffe399b9a135f76a0a15759bd07e25"
+}
+```
+
+empdata is the key calculated by the RSA module.
+
+----------
+
+### Logout
+
+```/j_spring_security_logout```
+
+A link, will be redirected to ```/index.html/#login``` after process.
+
 ## CI operations
 
 ### Get CI detail
@@ -691,6 +717,340 @@ pageNum: an integer stands for requested page number, default to 1.
 
 ## Map operations
 
+### Save or update map
+
+**POST** ```/tplg/map```
+
+The submitted map will be saved.
+
+*Request body:*
+
+```json
+{
+  "id": 0,
+  "title": "map",
+  "content": "<graph></graph>",
+  "comment": "a test map",
+  "auth": [
+    {
+      "group": "admin",
+      "readable": true,
+      "editable": true
+    },
+    {
+      "group": "infra",
+      "readable": true,
+      "editable": true
+    }
+  ]
+}
+```
+
+*Success response:*
+
+```json
+{
+	"status": "OK",
+	"content": 128
+}
+```
+
+The content here is id of the map.
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "map.title.exists"
+}
+```
+
+----------
+
+### Get map
+
+**GET** ```/tplg/map/:id````
+
+Get saved map with the specified id.
+
+*Parameter:*
+
+id: id of the map
+
+*Success response:*
+
+```json
+{
+  "id": 128,
+  "title": "map",
+  "content": "<graph></graph>",
+  "comment": "a test map",
+  "auth": [
+    {
+      "group": "admin",
+      "readable": true,
+      "editable": true
+    },
+    {
+      "group": "infra",
+      "readable": true,
+      "editable": true
+    }
+  ]
+}
+```
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "map.access.denied"
+}
+```
+
+----------
+
+### Update map
+
+**PUT** ```/tplg/map/:id```
+
+Update the specified map.
+
+*Parameter:*
+
+id: id of the map
+
+*Request body:*
+
+```json
+{
+  "title": "map",
+  "content": "<graph></graph>",
+  "comment": "a test map",
+  "auth": [
+    {
+      "group": "admin",
+      "readable": true,
+      "editable": true
+    },
+    {
+      "group": "infra",
+      "readable": true,
+      "editable": true
+    }
+  ]
+}
+```
+
+*Success response:*
+
+```json
+{
+	"status": "OK",
+	"content": 128
+}
+```
+
+The content here is id of the map.
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "map.title.exists"
+}
+```
+
+----------
+
+### Delete map
+
+**DELETE** ```/tplg/map/:id```
+
+Delete map with the specifid id.
+
+*Parameter:*
+
+id: id of the map.
+
+*Success response:*
+
+```json
+{
+	"status": "OK",
+	"content": 128
+}
+```
+
+The content here is id of the map.
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "map.access.denied"
+}
+```
+
+----------
+
+### Save favorites
+
+**POST** ```/tplg/map/favorites```
+
+Save the favorite map list for the current user.
+
+*Request body:*
+
+```json
+[
+  {
+    "id": 12
+  },
+  {
+    "id": 3
+  },
+  {
+    "id": 3
+  },
+  {
+    "id": 9
+  }
+]
+```
+
+Array of objects, with id set for the maps.
+
+*Success response:*
+
+```json
+{
+	"status": "OK"
+}
+```
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "invalid.favor.list"
+}
+```
+
+----------
+
+### Get favorites
+
+**GET** ```/tplg/favorties```
+
+Get the favorites list for the current user.
+
+*Success response:*
+
+```json
+{
+  "status": "OK",
+  "content": [
+    {
+      "id": 12,
+      "title": "map 2",
+      "content": "<graph></graph>",
+      "comment": "a test map",
+      "auth": [
+        {
+          "group": "admin",
+          "readable": true,
+          "editable": true
+        },
+        {
+          "group": "infra",
+          "readable": true,
+          "editable": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "map 1",
+      "content": "<graph></graph>",
+      "comment": "a test map",
+      "auth": [
+        {
+          "group": "admin",
+          "readable": true,
+          "editable": true
+        },
+        {
+          "group": "infra",
+          "readable": true,
+          "editable": true
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "map 3",
+      "content": "<graph></graph>",
+      "comment": "a test map",
+      "auth": [
+        {
+          "group": "admin",
+          "readable": true,
+          "editable": true
+        },
+        {
+          "group": "infra",
+          "readable": true,
+          "editable": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "db.access.error"
+}
+```
+
+----------
+
+### Delete favorite from list
+
+**DELETE** ```/tplg/favorites/:id```
+
+Delete the map with specified id from the current user's favorites list.
+
+*Parameter:*
+
+id: id of the map to be removed from list.
+
+*Success response:*
+
+```json
+{
+	"status": "OK"
+}
+```
+
+*Error response:*
+
+```json
+{
+	"status": "ERR",
+	"error": "favorite.not.found"
+}
+```
 
 ## Appendix
 
@@ -722,3 +1082,42 @@ Reported when some internal error happens.
 
 Server side is receiving invalid request, like some required field is empty, or invalid request format.
 
+*map.not.found*
+
+Map with the specified id or condition is not found.
+
+*db.access.error*
+
+A general error complaining about database access.
+
+*map.access.denied*
+
+User is not authorized to operate on the selected map.
+
+*map.auth.not.found*
+
+Authorization information is not found for the map, mostly this will caused by internal data corruption.
+
+*invalid.favor.list*
+
+Invalid user favorites list, can caused by list too long.
+
+*auth.required*
+
+Will be reported if try to save or update a map without auth information.
+
+*bad.credential*
+
+User trying to login with wrong username or password.
+
+*login.first*
+
+User session is not yet created, login first.
+
+*favorite.not.found*
+
+Specified map is not found in the current user's list, this could be internal data issue.
+
+*map.title.exists*
+
+Reported when try to save or update map, and the new title is already taken by another map.
